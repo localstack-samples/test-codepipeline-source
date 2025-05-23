@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create a SQS queue
+
+Parameters:
+  QueueName:
+    Type: String
+    Description: The name of the SQS queue
+    Default: my-simple-queue
+
+Resources:
+  MySimpleQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Ref QueueName
+
+Outputs:
+  QueueURL:
+    Value: !Ref MySimpleQueue
+    Description: URL of the created SQS queue
+
+  StackName:
+    Value: !Sub "${AWS::StackName}"
+    Description: Name of the CloudFormation stack
+
