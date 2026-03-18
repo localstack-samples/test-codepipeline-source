@@ -1,6 +1,6 @@
 # CodePipeline Sample Source — Message Utility Java App
 
-This repository is a sample source application used to demonstrate [LocalStack's](https://localstack.cloud) AWS CodePipeline emulation. It showcases a full CI/CD workflow with CodeBuild (Maven build + JUnit tests), CodeDeploy (ECS blue/green deployment), and CloudFormation stack provisioning.
+This repository is a sample source application used to demonstrate [LocalStack's AWS CodePipeline](https://docs.localstack.cloud/aws/services/codepipeline/) emulation. It showcases a full CI/CD workflow with CodeBuild (Maven build + JUnit tests), CodeDeploy (ECS blue/green deployment), and CloudFormation stack provisioning.
 
 ## Overview
 
@@ -13,7 +13,7 @@ The application is a simple Java utility (`MessageUtil`) built with Maven and pa
 
 ## Repository Structure
 
-```
+```bash
 .
 ├── Dockerfile          # nginx image serving index.html
 ├── appspec.yml         # CodeDeploy AppSpec for ECS blue/green deployment
@@ -28,9 +28,9 @@ The application is a simple Java utility (`MessageUtil`) built with Maven and pa
 
 ## Prerequisites
 
-- [LocalStack](https://localstack.cloud) with a valid `LOCALSTACK_AUTH_TOKEN`
-- Docker with access to the Docker socket
-- AWS CLI and [`awslocal`](https://github.com/localstack/awscli-local)
+- A valid [LocalStack for AWS license](https://localstack.cloud/pricing), which provides a [`LOCALSTACK_AUTH_TOKEN`](https://docs.localstack.cloud/getting-started/auth-token/) required to run these samples.
+- [Docker](https://docs.docker.com/get-docker/) with access to the Docker socket.
+- - AWS CLI and [`awslocal`](https://github.com/localstack/awscli-local)
 
 ```bash
 export LOCALSTACK_AUTH_TOKEN=<your-auth-token>
