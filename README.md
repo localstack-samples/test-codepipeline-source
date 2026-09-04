@@ -28,9 +28,9 @@ The application is a simple Java utility (`MessageUtil`) built with Maven and pa
 
 ## Prerequisites
 
-- A valid [LocalStack for AWS license](https://localstack.cloud/pricing), which provides a [`LOCALSTACK_AUTH_TOKEN`](https://docs.localstack.cloud/getting-started/auth-token/) required to run these samples.
+- A valid [LocalStack for AWS license](https://localstack.cloud/pricing), which provides a [`LOCALSTACK_AUTH_TOKEN`](https://docs.localstack.cloud/aws/getting-started/auth-token/) required to run these samples.
 - [Docker](https://docs.docker.com/get-docker/) with access to the Docker socket.
-- - AWS CLI and [`awslocal`](https://github.com/localstack/awscli-local)
+- [`lstk`](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/), installed via `npm install -g @localstack/lstk` or `brew install localstack/tap/lstk`. The AWS CLI is required by `lstk aws`.
 
 ```bash
 export LOCALSTACK_AUTH_TOKEN=<your-auth-token>
