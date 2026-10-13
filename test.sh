@@ -3,6 +3,7 @@
 # 1. a CodeBuild action using buildspec.yml (Maven build and JUnit tests)
 # 2. a CloudFormation action deploying cfn_stack.yaml
 # Then check the build artifact holds the jar and the stack created the queue.
+# LocalStack only runs V1 pipelines, so the pipeline type is set explicitly.
 set -euo pipefail
 
 REPOSITORY=${REPOSITORY:-localstack-samples/test-codepipeline-source}
@@ -42,6 +43,7 @@ lstk aws s3 mb "s3://$BUCKET" > /dev/null
 cat > "$WORK_DIR/pipeline.json" <<JSON
 {
   "name": "$PIPELINE",
+  "pipelineType": "V1",
   "roleArn": "$ROLE_ARN",
   "artifactStore": {"type": "S3", "location": "$BUCKET"},
   "stages": [
@@ -82,6 +84,10 @@ until [ "$status" = Succeeded ]; do
   if [[ $status =~ ^(Failed|Stopped|Superseded)$ ]]; then
     echo "Test failed: pipeline execution ended with status $status"
     lstk aws codepipeline get-pipeline-state --name "$PIPELINE"
+    exit 1
+  fi
+  if [ "$status" = None ] && (( waited >= 120 )); then
+    echo "Test failed: no pipeline execution started within 120s"
     exit 1
   fi
   if (( waited >= MAX_WAIT_SECONDS )); then
