@@ -48,6 +48,25 @@ mvn install
 
 This compiles `MessageUtil.java`, runs the JUnit tests, and produces `target/messageUtil-1.0.jar`.
 
+## Testing
+
+`test.sh` runs this repository through a LocalStack CodePipeline:
+
+1. **Source:** a CodeStarSourceConnection action fetches `$REPOSITORY` at `$BRANCH` (default `localstack-samples/test-codepipeline-source` at `main`).
+2. **Build:** a CodeBuild action runs `buildspec.yml`, so the Maven build and the JUnit tests run in CodeBuild.
+3. **Deploy:** a CloudFormation action creates `cfn_stack.yaml` with a queue name override.
+
+It then checks that the build artifact holds `target/messageUtil-1.0.jar` with the compiled `MessageUtil`, and that the stack created the queue and output its URL. It needs `javap` (any JDK) and LocalStack started with a GitHub token for downloading the source:
+
+```bash
+LOCALSTACK_CODEPIPELINE_GH_TOKEN=<github-token> lstk start
+./test.sh
+```
+
+Pull `public.ecr.aws/codebuild/amazonlinux-x86_64-standard:5.0` before the first run. LocalStack stops tracking a build if its image is still downloading a few seconds after the build starts.
+
+CI runs the same test on every pull request against the pull request branch. The ECS blue/green deployment (`appspec.yml`, `Dockerfile`) is not covered.
+
 ## License
 
 Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
